@@ -2,13 +2,64 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-void main() async {
-  final response = await http.get(Uri.parse('https://catfact.ninja/fact'));
+void main() {
+  runApp(MyApp());
+}
 
-  if (response.statusCode == 200) {
-    final jsonResponse = jsonDecode(response.body);
-    print(jsonResponse);
-  } else {
-    print('Request failed with status: ${response.statusCode}');
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Cat Fact App',
+      home: CatFactPage(),
+    );
+  }
+}
+
+class CatFactPage extends StatefulWidget {
+  @override
+  _CatFactPageState createState() => _CatFactPageState();
+}
+
+class _CatFactPageState extends State<CatFactPage> {
+  String _catFact = 'Loading...';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCatFact();
+  }
+
+  Future<void> _fetchCatFact() async {
+    final response = await http.get(Uri.parse('https://catfact.ninja/fact'));
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        _catFact = 'Fact about cats:  ${jsonResponse['fact']}';
+      });
+    } else {
+      setState(() {
+        _catFact = 'Error fetching cat fact.';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cat Fact'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            _catFact,
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+      ),
+    );
   }
 }
