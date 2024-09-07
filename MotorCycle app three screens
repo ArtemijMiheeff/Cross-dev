@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 void main() { 
 runApp(MaterialApp(home: RequestPage(),debugShowCheckedModeBanner: false, 
-	theme: ThemeData(primarySwatch: Colors.green),)); 
+	theme: ThemeData(primarySwatch: Colors.grey),)); 
 } 
 
 class RequestPage extends StatelessWidget { 
@@ -14,10 +14,17 @@ Widget build(BuildContext context) {
 		appBar: AppBar( 
 		title: Text('Home Page'), 
 		), 
-		body: Center( 
-		child: 
-			
-			ElevatedButton( 
+		body: Column( 
+		children:[ 
+
+			TextField(    //текст бокс для написания модели мотоцикла
+        decoration: InputDecoration(
+          hintText: 'Moto model',
+        ),
+      ),
+
+
+			ElevatedButton(   //кнопка для перехода на страницу с основной информацией о мотоцикле
 				onPressed: () { 
 					
 					Navigator.push( 
@@ -26,8 +33,10 @@ Widget build(BuildContext context) {
 							builder: (context) => 
 								MainInfoPage())); 
 				}, 
-				child: Text('Goto Next Page')),	 
-		), 
+				child: Text('Goto Next Page')),
+
+		],
+    ), 
 		
 	); 
 } 
