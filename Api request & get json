@@ -1,0 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+void main() async {
+  final response = await http.get(Uri.parse('https://catfact.ninja/fact'));
+
+  if (response.statusCode == 200) {
+    final jsonResponse = jsonDecode(response.body);
+    print(jsonResponse);
+  } else {
+    print('Request failed with status: ${response.statusCode}');
+  }
+}
