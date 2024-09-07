@@ -1,0 +1,78 @@
+import 'package:flutter/material.dart'; 
+
+void main() { 
+runApp(MaterialApp(home: RequestPage(),debugShowCheckedModeBanner: false, 
+	theme: ThemeData(primarySwatch: Colors.green),)); 
+} 
+
+class RequestPage extends StatelessWidget { 
+RequestPage({super.key}); 
+	
+@override 
+Widget build(BuildContext context) { 
+	return Scaffold( 
+		appBar: AppBar( 
+		title: Text('Home Page'), 
+		), 
+		body: Center( 
+		child: 
+			
+			ElevatedButton( 
+				onPressed: () { 
+					
+					Navigator.push( 
+						context, 
+						MaterialPageRoute( 
+							builder: (context) => 
+								MainInfoPage())); 
+				}, 
+				child: Text('Goto Next Page')),	 
+		), 
+		
+	); 
+} 
+} 
+
+class MainInfoPage extends StatelessWidget { 
+	
+const MainInfoPage({super.key}); 
+
+@override 
+Widget build(BuildContext context) { 
+	return Scaffold( 
+	appBar: AppBar(title: Text('Main Info Page'),), 
+		body: Center( 
+		child: 
+			
+			ElevatedButton( 
+				onPressed: () { 
+					
+					Navigator.push( 
+						context, 
+						MaterialPageRoute( 
+							builder: (context) => 
+								OtherInfoPage())); 
+				}, 
+				child: Text('Goto Next Page')),	 
+		), 
+	); 
+} 
+}
+
+
+
+class OtherInfoPage extends StatelessWidget {
+
+const OtherInfoPage({super.key});
+
+@override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Other info page'),),
+      body: Center (
+        child: Text('OTHER INFO PAGE'),
+      ),
+    );
+  }
+
+}
