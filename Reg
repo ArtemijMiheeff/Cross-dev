@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Number Checker',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const NumberChecker(),
+    );
+  }
+}
+
+class NumberChecker extends StatefulWidget {
+  const NumberChecker({Key? key}) : super(key: key);
+
+  @override
+  State<NumberChecker> createState() => _NumberCheckerState();
+}
+
+class _NumberCheckerState extends State<NumberChecker> {
+  final TextEditingController _textController = TextEditingController();
+  final List<int> _numbers = [1];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Проверка числа'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _textController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Введите число',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _checkNumber();
+              },
+              child: const Text('Проверить'),
+            ),
+            const SizedBox(height: 16.0),
+            Text('Список чисел:\n ${_numbers.join('\n ')}'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _checkNumber() {
+    final inputText = _textController.text;
+    if (inputText.isEmpty) {
+      // Обработка пустого ввода
+      return;
+    }
+
+    final inputNumber = int.tryParse(inputText);
+    if (inputNumber == null) {
+      // Обработка некорректного ввода
+      return;
+    }
+
+    if (_numbers.contains(inputNumber)) {
+      // Число уже есть в списке
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Число уже есть в списке')),
+      );
+    } else {
+      // Добавляем число в список
+      setState(() {
+        _numbers.add(inputNumber);
+      });
+      _textController.clear();
+    }
+  }
+}
